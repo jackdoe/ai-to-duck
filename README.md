@@ -28,6 +28,6 @@ And this is how this readme looks with the extension:
    - Open Chrome and go to `chrome://extensions/`
    - Enable "Developer mode" (toggle in the top right)
    - Click "Load unpacked"
-   - Select the ai-to-duck/duck folder containing the extension files
+   - Select the `ai-to-duck/duck` folder containing the extension files
 
 ## The code was 100% written by Opus 4.1
