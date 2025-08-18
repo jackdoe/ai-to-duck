@@ -9,6 +9,8 @@ How Hacker News looks with the extension:
 
 LinkedIn has been going absolutely crazy, literally every post has the word AI in it.
 
+> Is Agentic 🦆 the next big thing in B2B Marketing? Well, maybe. 
+
 ![linkedin](screenshots/linkedin.png)
 
 And this is how this readme looks with the extension:
