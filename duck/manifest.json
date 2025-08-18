@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "AI to Duck Replacer",
+  "version": "1.1",
+  "description": "Replaces 'AI' and 'Artificial Intelligence' with a duck emoji 🦆 and counts replacements",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [],
+  "action": {
+    "default_title": "AI to Duck Replacer - Click to see count"
+  },
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  }
+}
