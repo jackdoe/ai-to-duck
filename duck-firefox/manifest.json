@@ -1,0 +1,43 @@
+{
+  "manifest_version": 2,
+  "name": "AI to Duck Replacer",
+  "version": "2.0",
+  "description": "Replaces 'AI' and 'Artificial Intelligence' with a duck emoji 🦆. Click to toggle on/off.",
+  
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  
+  "background": {
+    "scripts": ["background.js"]
+  },
+  
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "notifications"
+  ],
+  
+  "browser_action": {
+    "default_title": "AI to Duck Replacer - Click to toggle",
+    "default_icon": {
+      "16": "icon.png",
+      "32": "icon.png",
+      "48": "icon.png",
+      "64": "icon.png"
+    }
+  },
+  
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png",
+    "48": "icon.png",
+    "64": "icon.png",
+    "128": "icon.png"
+  }
+}
