@@ -46,6 +46,6 @@ This of course will not work if you restart firefox the extension will disappear
 
 The other option is to install developer version of firefox and then enable xpinstall.signatures.required in about:config and then you can create a zip and install unsigned extension.
 
-Or you could upload the extension to addons.mozilla.org which requires you to setup 2fa and etc (which even though is reasonable, is quite a pain for this).
+Or you could upload the extension to addons.mozilla.org which requires you to setup an account with 2fa and etc (which even though is reasonable, is quite a pain for this).
 
 ### The code was 100% written by Opus 4.1, and was completely unchecked by a human, use at your own risk.
