@@ -30,4 +30,4 @@ And this is how this readme looks with the extension:
    - Click "Load unpacked"
    - Select the ai-to-duck/duck folder containing the extension files
 
-> was written by Opus 4.1
+> this code was 100% written by Opus 4.1
