@@ -48,6 +48,6 @@ The other option is to install developer version of firefox and then enable xpin
 
 Or you could upload the extension to addons.mozilla.org which requires you to setup an account with 2fa and etc (which even though is reasonable, is quite a pain for this).
 
-I find it quite funny that mozilla is the ones that denies you to run code that you want.
+I find it quite funny that mozilla is the one that denies you to run code that you want.
 
 ### The code was 100% written by Opus 4.1, and was completely unchecked by a human, use at your own risk.
