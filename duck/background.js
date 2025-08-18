@@ -1,68 +1,123 @@
+// Store state for each tab
+const tabStates = new Map();
 
-// Store counts for each tab
-const tabCounts = {};
+// Initialize extension
+chrome.runtime.onInstalled.addListener(() => {
+  chrome.action.setBadgeBackgroundColor({ color: '#4CAF50' });
+});
 
-// Listen for tab updates
+// Reset state when tab navigates
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === 'loading') {
-    // Reset count when page starts loading
-    tabCounts[tabId] = 0;
-    updateBadge(tabId, 0);
+    tabStates.delete(tabId);
+    updateBadgeForTab(tabId);
   }
 });
 
-// Listen for tab removal
+// Clean up when tab closes
 chrome.tabs.onRemoved.addListener((tabId) => {
-  delete tabCounts[tabId];
+  tabStates.delete(tabId);
 });
 
-// Listen for messages from content scripts
+// Update badge when switching tabs
+chrome.tabs.onActivated.addListener((activeInfo) => {
+  updateBadgeForTab(activeInfo.tabId);
+});
+
+// Listen for state updates from content scripts
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.type === 'updateCount' && sender.tab) {
+  if (request.type === 'updateState' && sender.tab) {
     const tabId = sender.tab.id;
-    tabCounts[tabId] = request.count;
-    updateBadge(tabId, request.count);
+    tabStates.set(tabId, {
+      count: request.count,
+      enabled: request.enabled
+    });
+    
+    // Update badge if this is the active tab
+    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      if (tabs[0] && tabs[0].id === tabId) {
+        updateBadge(request.count, request.enabled);
+      }
+    });
   }
 });
 
-// Listen for tab activation
-chrome.tabs.onActivated.addListener((activeInfo) => {
-  const count = tabCounts[activeInfo.tabId] || 0;
-  updateBadge(activeInfo.tabId, count);
-});
-
-// Function to update badge
-function updateBadge(tabId, count) {
-  chrome.tabs.get(tabId, (tab) => {
-    if (chrome.runtime.lastError) return;
-    
-    if (tab.active) {
-      if (count > 0) {
-        chrome.action.setBadgeText({ text: count.toString() });
-        chrome.action.setBadgeBackgroundColor({ color: '#4CAF50' });
-        chrome.action.setTitle({ 
-          title: `AI to Duck Replacer - Replaced ${count} instance${count === 1 ? '' : 's'}` 
-        });
-      } else {
-        chrome.action.setBadgeText({ text: '' });
-        chrome.action.setTitle({ 
-          title: 'AI to Duck Replacer - No AI found on this page' 
-        });
+// Update badge for a specific tab
+async function updateBadgeForTab(tabId) {
+  const state = tabStates.get(tabId);
+  if (state) {
+    updateBadge(state.count, state.enabled);
+  } else {
+    // Try to get state from content script
+    try {
+      const response = await chrome.tabs.sendMessage(tabId, { type: 'getState' });
+      if (response) {
+        updateBadge(response.count, response.enabled);
       }
+    } catch (e) {
+      // No content script loaded yet
+      updateBadge(0, true);
     }
-  });
+  }
 }
 
-// Handle extension icon click
-chrome.action.onClicked.addListener((tab) => {
-  const count = tabCounts[tab.id] || 0;
-  // Inject a script to show an alert with the count
-  chrome.scripting.executeScript({
-    target: { tabId: tab.id },
-    func: (count) => {
-      alert(`🦆 AI to Duck Replacer\n\nReplaced ${count} instance${count === 1 ? '' : 's'} of AI on this page!`);
-    },
-    args: [count]
-  });
-});
+// Update badge text, color and title
+function updateBadge(count, enabled) {
+  if (!enabled) {
+    chrome.action.setBadgeText({ text: 'OFF' });
+    chrome.action.setBadgeBackgroundColor({ color: '#757575' });
+    chrome.action.setTitle({ 
+      title: 'AI to Duck Replacer - DISABLED\nClick to enable' 
+    });
+  } else if (count > 0) {
+    chrome.action.setBadgeText({ text: count.toString() });
+    chrome.action.setBadgeBackgroundColor({ color: '#4CAF50' });
+    chrome.action.setTitle({ 
+      title: `AI to Duck Replacer - ENABLED\n${count} replacement${count === 1 ? '' : 's'}\nClick to disable` 
+    });
+  } else {
+    chrome.action.setBadgeText({ text: 'ON' });
+    chrome.action.setBadgeBackgroundColor({ color: '#2196F3' });
+    chrome.action.setTitle({ 
+      title: 'AI to Duck Replacer - ENABLED\nNo AI found on this page\nClick to disable' 
+    });
+  }
+}
 
+// Handle extension icon click - toggle the extension
+chrome.action.onClicked.addListener(async (tab) => {
+  try {
+    // Send toggle command to content script
+    const response = await chrome.tabs.sendMessage(tab.id, { type: 'toggle' });
+    
+    if (response) {
+      // Store the new state
+      tabStates.set(tab.id, {
+        count: response.count,
+        enabled: response.enabled
+      });
+      
+      // Update badge
+      updateBadge(response.count, response.enabled);
+      
+      // Save enabled state globally
+      await chrome.storage.local.set({ enabled: response.enabled });
+      
+      // Show notification
+      const message = response.enabled 
+        ? `Enabled! Found ${response.count} AI reference${response.count === 1 ? '' : 's'}.`
+        : 'Disabled! Original text restored.';
+      
+      chrome.notifications.create({
+        type: 'basic',
+        iconUrl: chrome.runtime.getURL('icon-48.png'),
+        title: '🦆 AI to Duck Replacer',
+        message: message,
+        priority: 0
+      });
+    }
+  } catch (error) {
+    // Content script not loaded yet, reload the tab
+    chrome.tabs.reload(tab.id);
+  }
+});
