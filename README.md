@@ -50,4 +50,6 @@ Or you could upload the extension to addons.mozilla.org which requires you to se
 
 I find it quite funny that mozilla is the one that denies you to run code that you want.
 
+---
+
 ### The code was 100% written by Opus 4.1, and was completely unchecked by a human, use at your own risk.
