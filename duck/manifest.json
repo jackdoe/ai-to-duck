@@ -13,7 +13,7 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": [],
+  "permissions": ["scripting", "activeTab"],
   "action": {
     "default_title": "AI to Duck Replacer - Click to see count"
   },
