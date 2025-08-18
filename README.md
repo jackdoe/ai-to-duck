@@ -11,6 +11,13 @@ LinkedIn has been going absolutely crazy, literally every post has the word AI i
 
 ![linkedin](screenshots/linkedin.png)
 
+And this is how this readme looks with the extension:
+
+![this page](screenshots/github.png)
+
+
+
+
 ## How to Install the Extension:
 
 1. **Clone the repository**:
