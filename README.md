@@ -20,7 +20,7 @@ And this is how this readme looks with the extension:
 
 
 
-## How to Install the Extension:
+## How to Install the Extension on Chrome:
 
 1. **Clone the repository**:
    - `git clone https://github.com/jackdoe/ai-to-duck.git`
@@ -31,5 +31,21 @@ And this is how this readme looks with the extension:
    - Enable "Developer mode" (toggle in the top right)
    - Click "Load unpacked"
    - Select the `ai-to-duck/duck` folder containing the extension files
+
+## How to Install the Extension on Firefox:
+
+1. **Clone the repository**:
+   - `git clone https://github.com/jackdoe/ai-to-duck.git`
+
+2. **Load the extension in Firefox**:
+   - Open Firefox and go to `about:debugging`
+   - Click "Load Temporary Add-on"
+   - Select the `ai-to-duck/duck-firefox` folder containing the extension files and click on manifest.json
+
+This of course will not work if you restart firefox the extension will disappear.
+
+The other option is to install developer version of firefox and then enable xpinstall.signatures.required in about:config and then you can create a zip and install unsigned extension.
+
+Or you could upload the extension to addons.mozilla.org which requires you to setup 2fa and etc (which even though is reasonable, is quite a pain for this).
 
 ### The code was 100% written by Opus 4.1, and was completely unchecked by a human, use at your own risk.
