@@ -17,7 +17,11 @@ And this is how this readme looks with the extension:
 
 ![this page](screenshots/github.png)
 
+Some funny reddit coincidences:
 
+![3](screenshots/3.png)
+
+![4](screenshots/4.png)
 
 
 ## How to Install the Extension on Chrome:
