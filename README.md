@@ -3,7 +3,9 @@
 
 This is a Chrome extension that replaces the word "AI" and "Artificial Intelligence" with a duck emoji.
 
-![4](screenshots/4.png)
+![3](screenshots/3.png)
+
+
 
 ![hn](screenshots/hn.png)
 
@@ -11,10 +13,7 @@ LinkedIn has been going absolutely crazy, literally every post has the word AI i
 
 > Is Agentic 🦆 the next big thing in B2B Marketing? Well, maybe. 
 
-![linkedin](screenshots/linkedin.png)
-
-
-![3](screenshots/3.png)
+![4](screenshots/4.png)
 
 
 
