@@ -5,8 +5,6 @@ This is a Chrome extension that replaces the word "AI" and "Artificial Intellige
 
 ![4](screenshots/4.png)
 
-How Hacker News looks with the extension:
-
 ![hn](screenshots/hn.png)
 
 LinkedIn has been going absolutely crazy, literally every post has the word AI in it.
